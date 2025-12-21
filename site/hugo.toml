@@ -1,6 +1,6 @@
 baseURL = 'https://wow-paper.fun/'
 languageCode = 'en-US'
-title = 'Wow'
+title = 'WowPaper'
 
 [module]
 [[module.imports]]
