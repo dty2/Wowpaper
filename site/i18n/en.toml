@@ -1,0 +1,20 @@
+[quickstart]
+other = "Quick Start"
+
+[docs]
+other = "Documentation"
+
+[donate]
+other = "Donate"
+
+[slogan1]
+other = "Wallpaper Player for Wayland"
+
+[slogan2]
+other = "Supports Static Wallpaper and Dynamic Wallpaper"
+
+[slogan3]
+other = "Use the Wowpaper, Be a Wow Maker!"
+
+[videoguide]
+other = "Check the usage effect"

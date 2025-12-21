@@ -1,0 +1,67 @@
+---
+title: "⚙️ Configuration"
+weight: 3
+cascade:
+  type: docs
+breadcrumbs: false
+---
+
+```toml
+# Fill in the wallpaper list you want to start playing first
+startlist = ""
+
+# Fill in the name of your wallpaper list
+[""]
+
+# Fill in the directory of your wallpaper list.
+# Both relative and absolute paths are supported.
+# Relative paths must be relative to config directory
+# Config directory default vaule is "$HOME/.config/wow/"
+# Example:
+# dir = "./aaa" ✅: Absolute Path is $HOME/.config/wow/aaa
+# dir = "/home/yourname/wallpapers/bbb" ✅: Support absolute path
+# dir = "$HOME/wallpapers/ccc" ✅: Support envitonment
+dir = ""
+
+# Default value(-1) will be used if this option is not set
+# Meaning manual control of wallpaper switching
+# If set to 60(or other integer), it means automatic switching
+# And each wallpaper will play for 60 seconds before switching to the next
+# Example:
+# time = -1 ✅: manual mode
+# time = 30 ✅: automatic play, each wallpaper will play for 30 seconds
+# time = 30.5 ❎
+# time = -2 ❎
+# time = -30 ❎
+time = -1
+
+# This option can be left unset too
+# Order can be empty, meaning no specific order is required
+# In this case, wallpapers are played in the loading order
+# If order is not empty, wallpapers will be played in the sequence defined in the order list
+# Wallpapers that are not filled in will not play even in the wallpaper list directory
+# Must write full file name, include file extension
+# Example:
+# order = [
+#   "aaa.webm",
+#   "bbb", --> without extension, but the actually format is webp
+#   "eee.webp"
+# ] ✅: play order: aaa, bbb, eee
+# order = [] ✅: empty is ok too
+# order = [
+#   "aaa.jjj", --> aaa.jjj is png file
+# ] ✅: Whether it is available depends on the actual file type
+# order = [
+#   "aaa", --> aaa.png is full file name
+# ] ❎: Must write all file name, include file extension
+order = []
+
+# You can have multiple wallpaper lists
+# And as you see, xxx wallpaper list only set the necessary option
+["xxx"]
+dir = "./xxx"
+
+["yyy"]
+dir = "./yyy"
+time = 40
+```

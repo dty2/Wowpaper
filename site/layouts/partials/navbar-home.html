@@ -1,0 +1,53 @@
+{{- $navWidth := "max-w-90rem" -}}
+{{- with .Site.Params.navbar.width -}}
+  {{ if eq . "normal" -}}
+    {{ $navWidth = "max-w-screen-xl" -}}
+  {{ else if eq . "full" -}}
+    {{ $navWidth = "max-w-full" -}}
+  {{ end -}}
+{{- end -}}
+
+{{- $page := . -}}
+{{- $iconHeight := 24 -}}
+
+<style>
+  .hextra-nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    background: transparent;
+    print-color-adjust: exact;
+  }
+
+  .hextra-max-navbar-width {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    height: 64px;
+    padding: 0 1.5rem;
+  }
+
+  .max-w-90rem { max-width: 90rem; }
+  .max-w-screen-xl { max-width: 1280px; }
+  .max-w-full { max-width: 100%; }
+
+  .nav-button {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+</style>
+
+<div class="hextra-nav-container">
+
+  <nav class="hextra-max-navbar-width {{ $navWidth }}">
+    {{ partial "navbar-title.html" . }}
+
+    {{- partial "language-switch" (dict "context" $page "grow" false "hideLabel" (not .Params.label) "iconName" (.Params.icon | default "translate") "iconHeight" $iconHeight "location" "top" "class" "nav-button") -}}
+    {{- partial "theme-toggle.html" (dict "iconHeight" $iconHeight "hideLabel" (not .Params.label) "iconHeight" $iconHeight "location" "top" "class" "nav-button") -}}
+  </nav>
+</div>

@@ -1,0 +1,20 @@
+[quickstart]
+other = "快速开始"
+
+[docs]
+other = "文档"
+
+[donate]
+other = "捐献"
+
+[slogan1]
+other = "适用于Wayland的壁纸播放器"
+
+[slogan2]
+other = "支持静态壁纸和动态壁纸"
+
+[slogan3]
+other = ""
+
+[videoguide]
+other = "查看使用效果"

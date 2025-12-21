@@ -1,0 +1,108 @@
+@font-face {
+  font-family: "ChineseFont";
+  src: url("/fonts/也字工厂啵啵体.ttf") format("truetype");
+  unicode-range: U+4E00-9FFF;
+}
+
+@font-face {
+  font-family: "EnglishFont";
+  src: url("/fonts/RecMonoCasualNerdFontMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "NerdFont";
+  src: url("/fonts/hack.ttf") format("truetype");
+}
+
+.content a {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  text-decoration-thickness: 0 !important;
+}
+
+html,
+body {
+  font-family: "EnglishFont", "ChineseFont", "NerdFont", system-ui, sans-serif;
+}
+
+.dino-callout a {
+  text-decoration: none !important;
+}
+
+.dino-callout {
+  display: flex;
+  align-items: flex-start;
+  padding: 1em;
+  margin: 1em 0;
+  border: 2px solid;
+  border-radius: 6px;
+}
+
+.dino-callout .dino {
+  font-size: 48px;
+  margin-right: 0.5em;
+  line-height: 1;
+}
+
+.light .dino-callout.error {
+  background: var(--color-red-50, #fff0f1) !important;
+  border: 1px solid var(--color-red-200, #fecaca);
+  color: var(--color-red-900, #7f1d1d);
+}
+
+.light .dino-callout.info {
+  background: var(--color-blue-50, #f0f7ff) !important;
+  border: 1px solid var(--color-blue-200, #bfdbfe);
+  color: var(--color-blue-900, #1e3a8a);
+}
+
+.light .dino-callout.tip {
+  background: var(--color-green-50, #f1fff0) !important;
+  border: 1px solid var(--color-green-200, #bbf7d0);
+  color: var(--color-green-900, #14532d);
+}
+
+.light .dino-callout.warning {
+  background: var(--color-amber-50, #fff8f0) !important;
+  border: 1px solid var(--color-amber-200, #fde68a);
+  color: var(--color-amber-900, #78350f);
+}
+
+.light .dino-callout.important {
+  background: var(--color-purple-50, #f9f0ff) !important;
+  border: 1px solid var(--color-purple-200, #e9d5ff);
+  color: var(--color-purple-900, #4a148c);
+}
+
+.dark .dino-callout.error {
+  background: #2a1a1a !important;
+  border-color: #fca5a5;
+  color: #fca5a5;
+}
+
+.dark .dino-callout.info {
+  background: #1a2740 !important;
+  border-color: #93c5fd;
+  color: #93c5fd;
+}
+
+.dark .dino-callout.tip {
+  background: #1a2f24 !important;
+  border-color: #86efac;
+  color: #86efac;
+}
+
+.dark .dino-callout.warning {
+  background: #3a250f !important;
+  border-color: #fcd34d;
+  color: #fcd34d;
+}
+
+.dark .dino-callout.important {
+  background: #2a1d3a !important;
+  border-color: #c4b5fd;
+  color: #c4b5fd;
+}
