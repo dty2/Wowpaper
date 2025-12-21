@@ -1,0 +1,65 @@
+baseURL = 'https://wow-paper.fun/'
+languageCode = 'en-US'
+title = 'Wow'
+
+[module]
+[[module.imports]]
+path = 'github.com/imfing/hextra'
+
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
+disableDefaultLanguageRedirect = false
+disableLanguages = []
+
+[languages]
+[languages.en]
+languageCode = 'en'
+languageName = 'English'
+[languages.zh-cn]
+languageCode = 'zh-cn'
+languageName = '简体中文'
+
+[markup]
+[markup.goldmark.renderer]
+unsafe = true
+
+[menu]
+
+[[menu.main]]
+name = "Search"
+weight = 1
+[menu.main.params]
+type = "search"
+
+[[menu.main]]
+name = "GitHub"
+url = "https://github.com/dty2/wowpaper"
+weight = 2
+[menu.main.params]
+icon = "github"
+
+[params]
+
+[params.navbar]
+displayTitle = true
+displayLogo = true
+width = "wide"
+
+[params.navbar.logo]
+path = "logo.png"
+width = 30
+height = 30
+link = "/"
+
+[params.theme]
+default = "dark"
+displayToggle = true
+
+[params.search]
+enable = true
+type = "flexsearch"
+[params.search.flexsearch]
+# content | summary | heading | title
+index = "content"
+# full | forward | reverse | strict
+tokenize = "forward"

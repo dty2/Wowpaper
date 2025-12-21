@@ -1,0 +1,336 @@
+{{ define "main" }}
+{{- $displayThemeToggle := site.Params.theme.displayToggle | default true -}}
+
+<style>
+    {{ if .IsHome }}
+        html, body { overflow: hidden; }
+    {{ end }}
+
+    :root {
+        /* JS will be synchronized to 1% of visualViewport */
+        --vh: 1vh;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        /* Use --vh to avoid 100vh being misaligned when zooming/address bar changes */
+        height: calc(var(--vh) * 100);
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .section {
+        scroll-snap-align: start;
+        position: relative;
+        min-height: calc(var(--vh) * 100);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    /* Fixed at the bottom center of the viewport */
+    .scroll-down {
+        position: fixed;
+        bottom: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        animation: bounce 1.5s infinite;
+        background: transparent;
+        padding: 0;
+        border: 0;
+        pointer-events: auto;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0) translateX(-50%); }
+        50% { transform: translateY(8px) translateX(-50%); }
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .btn-light {
+        background-color: #000;
+        color: #fff;
+        border: 1px solid #000;
+    }
+
+    .btn-light:hover {
+        background-color: #333;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .btn-light {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #fff;
+        }
+        .btn-light:hover { background-color: #ccc; }
+    }
+
+    .demo-video {
+        transform: translateY(20px);
+        max-width: 80rem;
+        min-width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+</style>
+
+<div class="main-container" id="mainContainer">
+    <!-- section 1: slogan and intro -->
+    <section class="section">
+        <h1 class="hero-title">{{ i18n "slogan1" }}</h1>
+        <h3 class="hero-subtitle">{{ i18n "slogan2" }}</h3>
+        <h3 class="hero-subtitle">{{ i18n "slogan3" }}</h3>
+
+        <div class="button-group">
+            <a href="{{ "/docs/quickstart" | relLangURL }}" class="btn btn-light">
+                {{ i18n "quickstart" }}
+            </a>
+            <a href="{{ "/docs/usr" | relLangURL }}" class="btn btn-light">
+                {{ i18n "docs" }}
+            </a>
+        </div>
+
+        <div class="scroll-down" id="scrollDown">
+            <span style="font-size: 2.5rem; vertical-align: middle"></span>
+                {{ i18n "videoguide"}}
+            <span style="font-size: 2.5rem; vertical-align: middle"></span>
+        </div>
+    </section>
+
+  <!-- section 2: demo -->
+    <section class="section" id="demo">
+        <video controls class="demo-video">
+            <source src="/demo.webm" type="video/webm" />
+        </video>
+    </section>
+</div>
+
+<script>
+(function () {
+  const container = document.getElementById('mainContainer') || document.querySelector('.main-container');
+  const sections = Array.from(document.querySelectorAll('.section'));
+  const scrollDown = document.getElementById('scrollDown') || document.querySelector('.scroll-down');
+
+  // Cumulative threshold:
+  // The larger the threshold, the more stable the system;
+  // the smaller the threshold, the more agile the system.
+  const WHEEL_THRESHOLD = 10;
+  const WHEEL_DEBOUNCE = 20;    // De-jitter time in milliseconds
+  const ANIM_DURATION = 200;    // Page turn animation duration in milliseconds
+
+  // status
+  let wheelAccum = 0;
+  let wheelTimer = null;
+  let isAnimating = false;
+  let isZooming = false;
+  let zoomTimer = null;
+  let lastViewportChange = 0;
+
+  // EaseOutCubic function
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  // Synchronize with --vh to avoid misalignment of 100vh when zooming or the address bar changes.
+  function setVh() {
+    const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+  }
+  setVh();
+  window.addEventListener('resize', setVh);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setVh, { passive: true });
+    window.visualViewport.addEventListener('scroll', setVh, { passive: true });
+  }
+
+  // Zoom detection: Record timestamps and briefly mark isZooming
+  function markZooming() {
+    isZooming = true;
+    lastViewportChange = Date.now();
+    if (zoomTimer) clearTimeout(zoomTimer);
+    zoomTimer = setTimeout(() => { isZooming = false; }, 600);
+  }
+
+  // Calculate the index of the section closest to the viewport center (more stable)
+  function getNearestIndex() {
+    const viewportHeight = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+    const viewportCenter = viewportHeight / 2;
+    let best = 0, bestDist = Infinity;
+    sections.forEach((s, i) => {
+      const r = s.getBoundingClientRect();
+      const center = r.top + r.height / 2;
+      const dist = Math.abs(center - viewportCenter);
+      if (dist < bestDist) { bestDist = dist; best = i; }
+    });
+    return best;
+  }
+
+  // Get the scroll context (container preferred)
+  function getScrollContext() {
+    if (container && container.scrollHeight > container.clientHeight) return { el: container, isDocument: false };
+    const docEl = document.scrollingElement || document.documentElement || document.body;
+    return { el: docEl, isDocument: true };
+  }
+
+  // Calculate the target scrollTop (relative to the context)
+  function getTargetScrollTopForIndex(idx, ctx) {
+    const section = sections[idx];
+    if (!section) return 0;
+    const sectionRect = section.getBoundingClientRect();
+    if (!ctx.isDocument) {
+      const containerRect = ctx.el.getBoundingClientRect();
+      const offset = sectionRect.top - containerRect.top;
+      return ctx.el.scrollTop + offset;
+    } else {
+      const docTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      return docTop + sectionRect.top;
+    }
+  }
+
+  // Custom animated scrolling (using the context's scrollTop or window.scrollTo)
+  function animateScrollTo(ctx, target, duration = ANIM_DURATION) {
+    if (isAnimating) return;
+    const el = ctx.el;
+    const start = ctx.isDocument ? (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0) : el.scrollTop;
+    const change = target - start;
+    const startTime = performance.now();
+    isAnimating = true;
+
+    function step(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      const eased = easeOutCubic(t);
+      const current = start + change * eased;
+      if (ctx.isDocument) window.scrollTo(0, current);
+      else el.scrollTop = current;
+
+      if (t < 1) requestAnimationFrame(step);
+      else {
+        if (ctx.isDocument) window.scrollTo(0, target);
+        else el.scrollTop = target;
+        setTimeout(() => { isAnimating = false; }, 40);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Scroll to index (automatically select context)
+  function scrollToIndex(idx) {
+    const clamped = Math.max(0, Math.min(sections.length - 1, idx));
+    const ctx = getScrollContext();
+    const target = getTargetScrollTopForIndex(clamped, ctx);
+    animateScrollTo(ctx, target);
+  }
+
+  // Wheel handling: Allow Ctrl/Meta zoom;
+  // allow the wheel to move within a short window where the viewport has just changed;
+  // cumulative + debouncing triggers page turning.
+  function wheelHandler(e) {
+    if (e.ctrlKey || e.metaKey) return; // 放行浏览器缩放
+    const now = Date.now();
+    // Allow lines to run within the zoomed window
+    if (isZooming && (now - lastViewportChange) < 700) return;
+    else isZooming = false;
+
+    const ctx = getScrollContext();
+    if (!ctx || !ctx.el) return;
+
+    e.preventDefault();
+    wheelAccum += e.deltaY;
+
+    if (wheelTimer) clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+      if (Math.abs(wheelAccum) >= WHEEL_THRESHOLD) {
+        const current = getNearestIndex();
+        const direction = wheelAccum > 0 ? 1 : -1;
+        const next = Math.max(0, Math.min(sections.length - 1, current + direction));
+        if (next !== current) scrollToIndex(next);
+      }
+      wheelAccum = 0;
+    }, WHEEL_DEBOUNCE);
+  }
+
+  // Bind the wheel to the container and document (for fault tolerance)
+  if (container) container.addEventListener('wheel', wheelHandler, { passive: false });
+  document.addEventListener('wheel', wheelHandler, { passive: false });
+
+  // Preserve scroll-down click behavior (using custom animation)
+  if (scrollDown) {
+    scrollDown.addEventListener('click', (e) => {
+      e.preventDefault();
+      const demo = document.getElementById('demo');
+      if (!demo) return;
+      const idx = sections.indexOf(demo);
+      if (idx >= 0) scrollToIndex(idx);
+    });
+  }
+
+  // Viewport zoom/address bar change detection (record timestamps)
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', markZooming, { passive: true });
+    window.visualViewport.addEventListener('scroll', markZooming, { passive: true });
+  }
+  window.addEventListener('gesturestart', markZooming, { passive: true });
+  window.addEventListener('gesturechange', markZooming, { passive: true });
+  window.addEventListener('gestureend', markZooming, { passive: true });
+  window.addEventListener('touchstart', (e) => { if (e.touches && e.touches.length >= 2) markZooming(); }, { passive: true });
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=')) markZooming();
+  }, { passive: true });
+  window.addEventListener('resize', () => { markZooming(); wheelAccum = 0; if (wheelTimer) { clearTimeout(wheelTimer); wheelTimer = null; } });
+
+  // Hide/show scroll-down: based on container.scrollTop (if the container is scrollable)
+  function updateScrollDownVisibility() {
+    if (!scrollDown) return;
+    const ctx = getScrollContext();
+    if (!ctx || !ctx.el) return;
+    const top = ctx.isDocument ? (window.pageYOffset || document.documentElement.scrollTop || 0) : ctx.el.scrollTop;
+    if (top > 50) scrollDown.style.display = 'none';
+    else scrollDown.style.display = 'block';
+  }
+
+  if (container && container.addEventListener) {
+    container.addEventListener('scroll', updateScrollDownVisibility, { passive: true });
+    // init once
+    updateScrollDownVisibility();
+  } else {
+    window.addEventListener('scroll', updateScrollDownVisibility, { passive: true });
+    updateScrollDownVisibility();
+  }
+})();
+</script>
+{{ end }}

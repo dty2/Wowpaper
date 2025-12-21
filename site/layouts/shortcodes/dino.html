@@ -1,0 +1,5 @@
+{{ $type := .Get "type" }}
+<div class="dino-callout {{ $type }}">
+  <span class="dino">󱍢 </span>
+  <div class="content">{{ .Inner | markdownify }}</div>
+</div>
