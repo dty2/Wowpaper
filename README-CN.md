@@ -4,7 +4,7 @@
    <img alt="Wowpaper icon" width="64" src="/site/static/logo.png">
    <p>
       <code><b> v0.1.0 </b></code> <br>
-      <a href="/README-CN.md">简体中文</a>
+      <a href="/README.md">English</a>
    </p>
    <sub>
       <i> Use the Wowpaper, Be a Wow Maker! </i>
