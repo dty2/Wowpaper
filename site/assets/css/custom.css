@@ -14,6 +14,15 @@
   src: url("/fonts/hack.ttf") format("truetype");
 }
 
+.content a {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  text-decoration-thickness: 0 !important;
+}
+
 html,
 body {
   font-family: "EnglishFont", "ChineseFont", "NerdFont", system-ui, sans-serif;
@@ -33,7 +42,7 @@ body {
 }
 
 .dino-callout .dino {
-  font-size: 50px;
+  font-size: 48px;
   margin-right: 0.5em;
   line-height: 1;
 }

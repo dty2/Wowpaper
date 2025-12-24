@@ -8,11 +8,16 @@ breadcrumbs: false
 
 ## 安装
 
-{{< dino type="error">}}
+{{< dino type="important">}}
+**重要:**  
 WowPaper采用使用"wlr-protocols"拓展协议实现窗口置底  
 因此只能在支持该协议的合成器上(如hyprland)工作  
 无法在不支持"wlr-protocols"协议的合成器或桌面环境(如GNOME)上工作
 {{< /dino >}}
+
+目前有三种方式可以安装Wowpaper
+
+1. 如果你使用Arch, 你可以使用包管理器来安装
 
 {{< tabs items="AUR" >}}
 
@@ -26,9 +31,20 @@ paru -S wowpaper
 
 {{< /tabs >}}
 
+2. 对于他系统上, 你可以在Github Release中下载二进制文件
+
 {{< cards cols="1" >}}
-{{< card link="https://github.com/dty2/WowPaper/releases" title="󱍢  Github Release" >}}
-{{< card link="../dev/build_and_install.md" title="󱍢  Local Build" >}}
+{{< card link="https://github.com/dty2/WowPaper/releases" title="Github Release" >}}
+{{< /cards >}}
+
+3. 或者, 你也可以克隆仓库并自己构建
+
+```bash
+git clone git@github.com:dty2/Wowpaper.git
+```
+
+{{< cards cols="1" >}}
+{{< card link="./dev/build" title="Local Build" >}}
 {{< /cards >}}
 
 ## 使用
@@ -48,16 +64,6 @@ mkdir $HOME/.config/wow/xxx
 ```bash
 mv zzz.mp4 $HOME/.config/wow/xxx/zzz.mp4
 ```
-
-{{< dino type="tip" >}}
-**您是否在寻找以下内容?**
-
-- [什么是壁纸列表?](../usr-doc/faq.md#什么是壁纸列表)
-- [壁纸列表只能有一个吗?](../usr-doc/faq.md#壁纸列表只能有一个吗)
-- [我可以在其他目录位置创建壁纸列表吗](../usr-doc/faq.md#可以在其他目录位置创建壁纸列表吗)
-- [壁纸列表可以分散放置吗?](../usr-doc/faq.md#壁纸列表可以分散放置吗)
-
-{{< /dino >}}
 
 ### 编写配置文件
 
@@ -79,15 +85,6 @@ time = -1
 order = ["zzz.mp4"]
 ```
 
-{{< dino type="tip" >}}
-**您是否在寻找以下内容?**
-
-- [配置文件模板有木有?](../usr-doc/template.md)
-- [这些配置选项都什么意思?](../usr-doc/faq.md#这些配置选项都什么意思)
-- [配置文件位置可以自行更换吗?](../usr-doc/faq.md#配置文件位置可以自行更换吗)
-
-{{< /dino >}}
-
 ### 启动!
 
 ```bash
@@ -96,14 +93,9 @@ wow-daemon
 
 😄 大功告成!!!
 
-{{< dino type="tip" >}}
-**您是否在寻找以下内容?**
-
-- [制作目的?](../usr-doc/faq.md#制作目的)
-- [优势何在?](../usr-doc/faq.md#优势何在)
-- [用户文档?](../usr-doc)
-- [开发文档?](../usr-doc)
-
+{{< dino type="info" >}}
+**提示:**  
+获得更多帮助请阅读[📘用户文档](./usr)
 {{< /dino >}}
 
 {{% /steps %}}

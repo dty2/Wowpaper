@@ -1,9 +1,8 @@
 ---
-title: "构建与安装"
+title: "📦 构建"
+weight: 2
 cascade:
   type: docs
-  params:
-    reversePagination: false
 breadcrumbs: false
 ---
 

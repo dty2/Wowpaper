@@ -1,0 +1,81 @@
+{{/* layouts/shortcodes/cp-code.html */}}
+{{ $text := .Get 0 }}
+
+<div class="cp-inline-wrap">
+  <span class="cp-inline-text">{{ $text }}</span>
+
+  <!-- 图标按钮 -->
+  <button
+    class="hextra-code-copy-btn"
+    title="Copy code"
+    type="button"
+    aria-label="Copy code"
+  >
+    <span class="hextra-copy-icon" aria-hidden="true"></span>
+    <span class="hextra-success-icon" aria-hidden="true"></span>
+  </button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.hextra-code-copy-btn').forEach(btn => {
+    const textEl = btn.previousElementSibling; // 紧邻的代码文本
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(textEl.textContent).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1200);
+      });
+    });
+  });
+});
+</script>
+
+<style>
+.cp-inline-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--code-bg, #f5f5f7);
+  border-radius: 6px;
+  padding: 2px 6px;
+  max-width: 100%;
+  flex-wrap: nowrap;
+}
+.cp-inline-text {
+  font-family: monospace;
+  color: var(--fg, #333);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.hextra-code-copy-btn {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--fg, #333);
+  overflow: hidden;
+}
+.hextra-code-copy-btn:hover { color: var(--accent, #007aff); }
+.hextra-code-copy-btn.copied { color: green; }
+.hextra-copy-icon,
+.hextra-success-icon {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hextra-success-icon { display: none; }
+.hextra-code-copy-btn.copied .hextra-copy-icon { display: none; }
+.hextra-code-copy-btn.copied .hextra-success-icon { display: block; }
+@media (prefers-color-scheme: dark) {
+  .cp-inline-wrap { background: #1f2430; }
+  .cp-inline-text { color: #d9e0ee; }
+  .hextra-code-copy-btn { color: #cfd6e6; }
+}
+</style>

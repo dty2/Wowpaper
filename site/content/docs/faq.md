@@ -1,58 +1,44 @@
 ---
-title: "FAQ"
+title: "💡 FAQ"
 weight: 5
 cascade:
   type: docs
 breadcrumbs: false
 ---
 
-## 什么是壁纸列表
+## What is a Wallpaper List?
 
-本质上是放置多个壁纸的目录
+Essentially, it's a directory for storing multiple wallpapers.
 
-类似流媒体音乐软件中的歌单
+Similar to playlists in streaming music software.
 
-本软件通过壁纸列表组织壁纸并播放
+This software organizes and plays wallpapers using wallpaper lists.
 
-## 壁纸列表只能有一个吗
+## Can there only be one wallpaper list?
 
-可以有多个
+Yes, there can be multiple.
 
-比如在`$HOME/.config/wow`中创建壁纸列表"aaa", "bbb"还有"ccc"
+For example, creating wallpaper lists "aaa", "bbb", and "ccc" in `$HOME/.config/wow`
 
 ```bash
 cd $HOME/.config/wow/
 mkdir aaa bbb ccc
 ```
 
-## 可以在其他目录位置创建壁纸列表吗
+## Can wallpaper lists be created in other directories?
 
-可以, 在配置文件中强制指定某壁纸列表的目录位置
+Yes, you can force the directory location of a wallpaper list to be specified in the configuration file.
 
-因此可以放到任意目录下, 不用必须放到`$HOME/.config/wow`下
+Therefore, it can be placed in any directory; it doesn't have to be under `$HOME/.config/wow`.
 
-## 壁纸列表可以分散放置吗
+## Can wallpaper lists be scattered?
 
-可以, 在配置文件中强制指定某壁纸列表的目录位置
+Yes, you can force the directory location of a wallpaper list to be specified in the configuration file.
 
-因此不要求所有的壁纸列表放在统一的目录下
+Therefore, it's not required that all wallpaper lists be placed in the same directory.
 
-即, 可以实现如下效果
+That is, the following effect can be achieved:
 
-- 壁纸列表xxx在`$HOME/.config/wow`目录
-- 壁纸列表yyy在`$HOME/y/`目录
-- 壁纸列表zzz在`$HOME/z/`目录
-
-## 这些配置选项都什么意思
-
-详见[配置模板中的注释](../usr/template.md)
-
-## 配置文件位置可以自行更换吗
-
-可以, 通过修改配置工作目录实现该效果
-
-详见[用户指南]()
-
-## 制作目的
-
-## 优势何在
+- Wallpaper list xxx is in the `$HOME/.config/wow` directory
+- Wallpaper list yyy is in the `$HOME/y/` directory
+- Wallpaper list zzz is in the `$HOME/z/` directory

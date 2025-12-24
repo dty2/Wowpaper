@@ -8,11 +8,16 @@ breadcrumbs: false
 
 ## Install
 
-{{< dino type="error" >}}
+{{< dino type="important" >}}
+**Important:**  
 WowPaper uses the wlr-protocols extended protocol to realize window bottoming  
 Therefore only works on Compositor that support this protocol (such as hyprland)  
 Can't work at the Compositor and Desktop Environments(such as GNOME) which are not support "wlr-protocols"  
 {{< /dino >}}
+
+There are three ways to install Wowpaper now
+
+1. If you use Arch, you can use package manager to install
 
 {{< tabs items="AUR" >}}
 
@@ -26,9 +31,20 @@ paru -S wowpaper
 
 {{< /tabs >}}
 
+2. For other system, you can download bin file in release
+
 {{< cards cols="1" >}}
-{{< card link="https://github.com/dty2/WowPaper/releases" title=" Github Release" >}}  
-{{< card link="/../dev/build_and_install" title="󱑥 Local Build" >}}
+{{< card link="https://github.com/dty2/WowPaper/releases" title="Github Release" >}}
+{{< /cards >}}
+
+3. Or, you can clone respository and build your self
+
+```bash
+git clone git@github.com:dty2/Wowpaper.git
+```
+
+{{< cards cols="1" >}}
+{{< card link="./dev/build" title="Local Build" >}}
 {{< /cards >}}
 
 ## Use
@@ -48,16 +64,6 @@ mkdir $HOME/.config/wow/xxx
 ```bash
 mv zzz.mp4 $HOME/.config/wow/xxx/zzz.mp4
 ```
-
-{{< dino type="tip" >}}
-**Are you looking for these?**
-
-- [what is wallpaper list?](../usr/faq#what-is-wallpaper-list)
-- [Can a wallpaper list only have one?](../usr/faq#Can-a-wallpaper-list-only-have-one)
-- [Can I create wallpaper lists in other directory locations?](../usr/faq#Can-I-create-wallpaper-lists-in-other-directory-locations)
-- [Can the wallpaper list be arranged in a scattered manner?](../usr/faq#Can-the-wallpaper-list-be-arranged-in-a-scattered-manner)
-
-{{< /dino >}}
 
 ### Edit Configuration File
 
@@ -80,15 +86,6 @@ time = -1
 order = ["zzz.mp4"]
 ```
 
-{{< dino type="tip" >}}
-**Are you looking for these?**
-
-- [Is there a configuration file template?](../usr/template)
-- [What do these configuration options mean?](../usr/faq#What-do-these-configuration-options-mean)
-- [Can the configuration file location be changed manually?](../usr/faq#Can-the-configuration-file-location-be-changed-manually)
-
-{{< /dino >}}
-
 ### Launch!
 
 ```bash
@@ -97,14 +94,9 @@ wow-daemon
 
 😄 Done!!!
 
-{{< dino type="tip" >}}
-**Are you looking for these?**
-
-- [Purpose of creation?](../usr/faq#Purpose-of-creation)
-- [Advantages?](../usr/faq#Advantages)
-- [User documentation?](../usr)
-- [Developer documentation?](../usr)
-
+{{< dino type="info" >}}
+**Tip:**  
+Get more help please read [📘Usr Doc](./usr)
 {{< /dino >}}
 
 {{% /steps %}}

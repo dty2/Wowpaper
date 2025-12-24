@@ -1,9 +1,8 @@
 ---
-title: "Test"
+title: "🐞 Test"
+weight: 3
 cascade:
   type: docs
-  params:
-    reversePagination: false
 breadcrumbs: false
 ---
 
@@ -34,13 +33,19 @@ cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DENABLE_TEST=ON
 └── runtest.py  # <- regression script , run ".test" file
 ```
 
-> [!NOTE]
-> After adding a new ".test" file, run `cmake --build build` please
+{{< dino type="info" >}}
+After adding a new ".test" file  
+Please run `cmake --build build`
+{{< /dino >}}
+
+- run all test
 
 ```bash
-# run all test
 ctest --test-dir build --output-on-failure
+```
 
-# run single test
+- run single test
+
+```bash
 python3 test/runtest.py test/cases/[test name].test
 ```

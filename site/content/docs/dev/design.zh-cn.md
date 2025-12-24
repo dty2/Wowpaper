@@ -1,9 +1,8 @@
 ---
-title: "设计"
+title: "🧩 设计"
+weight: 1
 cascade:
   type: docs
-  params:
-    reversePagination: false
 breadcrumbs: false
 ---
 

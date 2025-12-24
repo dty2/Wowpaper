@@ -1,12 +1,12 @@
 ---
-title: "FAQ"
+title: "💡 FAQ"
 weight: 5
 cascade:
   type: docs
 breadcrumbs: false
 ---
 
-## 什么是壁纸列表
+## 壁纸列表是什么
 
 本质上是放置多个壁纸的目录
 
@@ -42,17 +42,3 @@ mkdir aaa bbb ccc
 - 壁纸列表xxx在`$HOME/.config/wow`目录
 - 壁纸列表yyy在`$HOME/y/`目录
 - 壁纸列表zzz在`$HOME/z/`目录
-
-## 这些配置选项都什么意思
-
-详见[配置模板中的注释](../usr/template.md)
-
-## 配置文件位置可以自行更换吗
-
-可以, 通过修改配置工作目录实现该效果
-
-详见[用户指南]()
-
-## 制作目的
-
-## 优势何在

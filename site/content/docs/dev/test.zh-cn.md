@@ -1,9 +1,8 @@
 ---
-title: "测试"
+title: "🐞 测试"
+weight: 3
 cascade:
   type: docs
-  params:
-    reversePagination: false
 breadcrumbs: false
 ---
 
@@ -34,13 +33,19 @@ cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DENABLE_TEST=ON
 └── runtest.py # <- 回归测试脚本, 运行 ".test" 文件
 ```
 
-> [!NOTE]
-> 添加新的".test"文件后, 请重新执行`cmake --build build`
+{{< dino type="info" >}}
+添加新的".test"文件后  
+请重新执行`cmake --buiLd build`
+{{< /dino >}}
+
+- 运行所有测试
 
 ```bash
-# 运行所有测试
 ctest --test-dir build --output-on-failure
+```
 
-# 单独运行测试
+- 单独运行测试
+
+```bash
 python3 test/runtest.py test/cases/[test name].test
 ```
