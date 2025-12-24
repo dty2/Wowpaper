@@ -1,9 +1,8 @@
 ---
-title: "Build and Install"
+title: "📦 Build"
+weight: 2
 cascade:
   type: docs
-  params:
-    reversePagination: false
 breadcrumbs: false
 ---
 
@@ -47,6 +46,10 @@ cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
 
 ```bash
 cmake --build build
-# Prefix needs to be specified
+```
+
+- Prefix needs to be specified
+
+```bash
 cmake --install build
 ```
