@@ -28,6 +28,7 @@ void TaskList::push(std::string action, std::string target) {
 Task TaskList::get() {
   std::unique_lock<std::mutex> lock(mtx);
   taskCondition.wait(lock, [this] { return !cmdQueue.empty(); });
+
   auto res = cmdQueue.front();
   cmdQueue.pop();
   return res;
