@@ -12,10 +12,7 @@ bool Decoder::getStream() {
 
   videoStreamIndex = -1;
 
-  AVDictionary* opts = nullptr;
-  av_dict_set(&opts, "only_video", "1", 0);
-
-  if (avformat_find_stream_info(*formatContext, &opts) < 0) {
+  if (avformat_find_stream_info(*formatContext, nullptr) < 0) {
     LOG(ERROR) << "Could not find stream information for file: "
                << wallpaper->name;
     return false;
